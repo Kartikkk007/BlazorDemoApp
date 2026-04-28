@@ -2,37 +2,47 @@
 @using BlazorDatabaseDemo.Models
 @using BlazorDatabaseDemo.Services
 @inject StudentService studentService
-<h3>Students</h3>
-@if(students == null)
-{
-    <p> Loading...</p>
-}
-else{
-    <table class=" table">
-        <thead>
-           <tr>
-               <th>ID</th>
-                <th>NAME</th>
-                <th>AGE</th>
-                <th>CITY</th>
 
-           </tr>
+<div class="students-container">
+    <div class="header-section">
+        <h3>Student Records</h3>
+        <p>Manage and view all registered students below.</p>
+    </div>
 
-        </thead>
-        <tbody>
-            @foreach(var std in students)
-            {
-                <tr>
-                    <td>@std.Id</td>
-                    <td>@std.Name</td>
-                    <td>@std.Age</td>
-                    <td>@std.City</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-
+    @if (students == null)
+    {
+        <div class="loading-state">
+            <div class="spinner"></div>
+            <p>Fetching data from SQL Server...</p>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>NAME</th>
+                        <th>AGE</th>
+                        <th>CITY</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var std in students)
+                    {
+                        <tr>
+                            <td><span class="id-badge">@std.Id</span></td>
+                            <td>@std.Name</td>
+                            <td>@std.Age</td>
+                            <td>@std.City</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
 
 @code {
     List<Student>? students;
@@ -40,5 +50,7 @@ else{
     protected override async Task OnInitializedAsync()
     {
         students = await studentService.GetStudentsAsync();
+        // StateHasChanged is called automatically after OnInitializedAsync,
+        // but it's good practice for complex updates.
     }
 }

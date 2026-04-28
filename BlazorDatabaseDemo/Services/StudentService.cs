@@ -14,7 +14,7 @@ namespace BlazorDatabaseDemo.Services
         }
         public async Task<List<Student>> GetStudentsAsync()
         {
-            return await _context.Students.ToListAsync();
+            return await _context.Students.AsNoTracking().ToListAsync();
         }
     }
 }
