@@ -50,7 +50,6 @@
     protected override async Task OnInitializedAsync()
     {
         students = await studentService.GetStudentsAsync();
-        // StateHasChanged is called automatically after OnInitializedAsync,
-        // but it's good practice for complex updates.
+        
     }
 }
