@@ -1,0 +1,44 @@
+﻿@page "/students"
+@using BlazorDatabaseDemo.Models
+@using BlazorDatabaseDemo.Services
+@inject StudentService studentService
+<h3>Students</h3>
+@if(students == null)
+{
+    <p> Loading...</p>
+}
+else{
+    <table class=" table">
+        <thead>
+           <tr>
+               <th>ID</th>
+                <th>NAME</th>
+                <th>AGE</th>
+                <th>CITY</th>
+
+           </tr>
+
+        </thead>
+        <tbody>
+            @foreach(var std in students)
+            {
+                <tr>
+                    <td>@std.Id</td>
+                    <td>@std.Name</td>
+                    <td>@std.Age</td>
+                    <td>@std.City</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    List<Student>? students;
+
+    protected override async Task OnInitializedAsync()
+    {
+        students = await studentService.GetStudentsAsync();
+    }
+}
